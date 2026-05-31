@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "Accessibility Outliner - Highlight WCAG Issues",
-  "version": "0.1.0",
-  "description": "Visually outline accessibility issues: small target sizes, empty headings, and links with no accessible name.",
+  "version": "1.0.0",
+  "description": "Visually outline accessibility issues: small target sizes, empty headings, links with no accessible name, and duplicate IDs.",
   "icons": {
     "16": "assets/icon-16.png",
     "48": "assets/icon-48.png",
