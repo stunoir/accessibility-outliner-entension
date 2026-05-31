@@ -12,23 +12,26 @@
   <main class="extension-panel">
 
     <header class="brand-container">
+      <img class="logo" src="../assets/icon-128.png" alt="">
       <h1 class="title">Accessibility Outliner</h1>
-      <img class="logo" src="../assets/icon-48.png" alt="">
     </header>
 
-    <p class="extension-overview">Each tool visually outlines a specific accessibility issue on the current page.</p>
+    <p class="extension-overview">Each tool outlines one accessibility issue on the current page. Select a tool, then check the console for details on every item it flags.</p>
 
     <div class="buttons-container" id="buttons-container"></div>
 
-    <button type="button" class="clear-button" id="clear-button">Clear selection</button>
+    <button type="button" class="clear-button" id="clear-button">
+      <svg class="clear-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M3 6h18" />
+        <path d="M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2" />
+        <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" />
+        <path d="M10 11v6" />
+        <path d="M14 11v6" />
+      </svg>
+      <span>Clear selection</span>
+    </button>
 
     <p class="extension-status" id="extension-status" role="status" hidden></p>
-
-    <footer class="info-container">
-      <h2 class="title">New to testing?</h2>
-      <p>Try the <a href="https://www.w3.org/WAI/test-evaluate/preliminary/" target="_blank" rel="noopener">WAI Easy Checks</a> guide.
-      </p>
-    </footer>
 
   </main>
 

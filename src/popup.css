@@ -1,16 +1,17 @@
 :root {
   color-scheme: light dark;
-  --surface: oklch(96.5% 0.004 250);
-  --text: oklch(22% 0.01 250);
+  --surface: oklch(100% 0 0);
+  --text: oklch(37.6% 0.019 268);
   --text-strong: oklch(14% 0.012 250);
-  --text-muted: oklch(48% 0.01 250);
+  --text-muted: oklch(55.6% 0.019 271);
   --border: oklch(88% 0.007 250);
-  --btn-surface: oklch(99% 0.002 250);
-  --btn-border: oklch(84% 0.008 250);
-  --btn-hover-surface: oklch(99.5% 0.001 250);
-  --btn-hover-border: oklch(55% 0.04 245);
-  --btn-active-surface: oklch(96% 0.006 250);
-  --accent: oklch(40% 0.1 245);
+  --btn-surface: oklch(100% 0 0);
+  --btn-border: oklch(79.6% 0.096 293.5);
+  --btn-hover-surface: oklch(95.4% 0.024 296);
+  --btn-hover-border: oklch(79.6% 0.096 293.5);
+  --btn-active-surface: oklch(95.4% 0.024 296);
+  --btn-active-border: oklch(79.6% 0.096 293.5);
+  --accent: oklch(0.572 0.2321 317.18);
   --accent-hover: oklch(48% 0.13 65);
   --shadow: oklch(22% 0.01 250 / 0.08);
   --font-sans:
@@ -20,6 +21,12 @@
   --colour-warning-base: oklch(83.7% 0.164 84.4);
   --colour-error-base: oklch(58.8% 0.234 28.5);
   --colour-info-base: oklch(54% 0.225 261);
+
+  /*== popup count-badge colours, kept separate from the overlay colour tokens above
+     so they can be tuned for the panel surface without weakening white-on-error
+     legibility in the page overlays. light panel is white, so these run darker. */
+  --count-error: oklch(58.8% 0.234 28.5);
+  --count-success: oklch(52% 0.15 150);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -34,6 +41,7 @@
     --btn-hover-surface: oklch(28% 0.015 250);
     --btn-hover-border: oklch(55% 0.04 245);
     --btn-active-surface: oklch(24% 0.012 250);
+    --btn-active-border: oklch(55% 0.04 245);
     --accent: oklch(72% 0.1 245);
     --accent-hover: oklch(78% 0.14 70);
     --shadow: oklch(8% 0.008 250 / 0.4);
@@ -42,6 +50,11 @@
     --colour-warning-base: oklch(83.7% 0.164 84.4);
     --colour-error-base: oklch(58.8% 0.234 28.5);
     --colour-info-base: oklch(68.9% 0.152 257.6);
+
+    /*== dark panel, so the count badges run lighter to stay legible on it. the
+       overlay error token above stays dark for white-on-error contrast. */
+    --count-error: oklch(70% 0.18 25);
+    --count-success: oklch(72.3% 0.192 149.6);
   }
 }
 
@@ -71,8 +84,16 @@ body {
   text-rendering: optimizeLegibility;
 }
 
+html {
+  /*== transparent so the rounded body corners reveal the browser's popup backdrop
+     (which follows color-scheme) rather than a square surface-coloured block. */
+  background: transparent;
+}
+
 body {
   width: 17.5rem;
+  border: none;
+  overflow: hidden;
   animation: fadeIn 160ms ease-out both;
 }
 
@@ -83,13 +104,13 @@ body {
 .brand-container {
   display: flex;
   flex-direction: row;
-  gap: 1rem;
+  gap: 10px;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   margin-block-end: 1rem;
 
   .logo {
-    height: 1.25rem;
+    height: 1.35rem;
     margin: 0;
     border-radius: 0.1875rem;
   }
@@ -97,7 +118,7 @@ body {
   .title {
     margin: 0;
     font-family: var(--font-sans);
-    font-size: 1.0625rem;
+    font-size: 1.05rem;
     font-weight: 600;
     line-height: 1.1;
     letter-spacing: -0.02em;
@@ -111,7 +132,7 @@ body {
   margin: 0 0 1rem;
   font-size: 0.875rem;
   line-height: 1.5;
-  color: var(--text-strong);
+  color: var(--text-muted);
 }
 
 .buttons-container {
@@ -167,11 +188,11 @@ button {
     flex-shrink: 0;
     font-weight: 600;
     font-variant-numeric: tabular-nums;
-    color: var(--colour-error-base);
+    color: var(--count-error);
   }
 
   .btn-count.is-zero {
-    color: var(--colour-success-base);
+    color: var(--count-success);
   }
 
   &:hover {
@@ -187,6 +208,7 @@ button {
 
   &:active {
     background-color: var(--btn-active-surface);
+    border-color: var(--btn-active-border);
     box-shadow: 0 1px 1px var(--shadow);
   }
 
@@ -203,16 +225,24 @@ button {
 
 button.clear-button {
   display: none;
-  text-align: center;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
   margin-block-start: 1rem;
   background-color: transparent;
-  border-color: var(--border);
+  border: none;
   color: var(--text);
   box-shadow: none;
+  line-height: 1;
+
+  .clear-icon {
+    width: 0.875rem;
+    height: 0.875rem;
+    flex-shrink: 0;
+  }
 
   &:is(:hover, :focus-visible) {
     background-color: var(--btn-hover-surface);
-    border-color: var(--btn-hover-border);
     box-shadow: none;
   }
 
@@ -223,18 +253,19 @@ button.clear-button {
 }
 
 .extension-panel:has(button.is-active) button.clear-button {
-  display: block;
+  display: flex;
 }
 
 .extension-status {
   margin: 1rem 0 0;
   padding: 0.5rem 0.75rem;
-  border: 2px solid var(--colour-warning-base);
+  border: 1px solid var(--colour-warning-base);
   border-radius: 0.375rem;
   background-color: color-mix(in srgb, var(--colour-warning-base) 12%, transparent);
   font-size: 0.875rem;
   line-height: 1.5;
   color: var(--text-strong);
+  text-align: center;
 }
 
 .info-container {
