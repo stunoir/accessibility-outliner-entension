@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Accessibility Outliner</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+
+<body>
+
+  <main class="extension-panel">
+
+    <header class="brand-container">
+      <h1 class="title">Accessibility Outliner</h1>
+      <img class="logo" src="../assets/icon-48.png" alt="">
+    </header>
+
+    <p class="extension-overview">Each tool visually outlines a specific accessibility issue on the current page.</p>
+
+    <div class="buttons-container" id="buttons-container"></div>
+
+    <button type="button" class="clear-button" id="clear-button">Clear results</button>
+
+    <p class="extension-status" id="extension-status" role="status" hidden></p>
+
+    <footer class="info-container">
+      <h2 class="title">New to testing?</h2>
+      <p>Try the <a href="https://www.w3.org/WAI/test-evaluate/preliminary/" target="_blank" rel="noopener">WAI Easy Checks</a> guide.
+      </p>
+    </footer>
+
+  </main>
+
+  <script src="bookmarklets.js"></script>
+  <script src="popup.js"></script>
+
+</body>
+
+</html>
