@@ -146,7 +146,7 @@ async function run(bookmarklet, countEl, statusEl) {
       countEl.hidden = false
       await saveState(tab, bookmarklet.name, num)
     }
-  } catch (err) {
+  } catch {
     //== chrome blocks scripting on chrome://, the web store, and other extension pages.
     statusEl.textContent = "This page can't be scripted by extensions."
     statusEl.hidden = false
