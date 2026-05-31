@@ -91,7 +91,9 @@ async function clearAll(container, statusEl) {
       target: { tabId: tab.id },
       func: function () {
         document
-          .querySelectorAll('[data-target-size-overlay], [data-empty-heading-overlay], [data-empty-anchor-overlay]')
+          .querySelectorAll(
+            '[data-target-size-overlay], [data-empty-heading-overlay], [data-empty-anchor-overlay], [data-duplicate-id-overlay]'
+          )
           .forEach(function (node) {
             node.remove()
           })
@@ -122,6 +124,14 @@ async function run(bookmarklet, countEl, statusEl) {
       error: styles.getPropertyValue('--colour-error-base').trim(),
       info: styles.getPropertyValue('--colour-info-base').trim()
     }
+
+    //== install the shared console reporter (window.__a11yOutliner) before the check
+    //== fn runs. it lives in the page's isolated world, which persists across these
+    //== executeScript calls, so every bookmarklet can share the one logFindings.
+    await chrome.scripting.executeScript({
+      target: { tabId: tab.id },
+      func: installOutlinerHelpers
+    })
 
     const results = await chrome.scripting.executeScript({
       target: { tabId: tab.id },

@@ -222,7 +222,7 @@ button.clear-button {
   }
 }
 
-.panel:has(button.is-active) button.clear-button {
+.extension-panel:has(button.is-active) button.clear-button {
   display: block;
 }
 

@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Daily Demo - demo article</title>
+
+  <style>
+    /*== demo article page for the accessibility outliner extension. */
+    /*== it deliberately contains accessibility issues for the tools to find: */
+    /*== empty headings, empty links, duplicate ids, and undersized/overlapping controls. */
+
+    :root {
+      --ink: #1a1a1a;
+      --muted: #6b6b6b;
+      --rule: #e2e2e2;
+      --accent: #7a1fa2;
+      --paper: #fcfcfb;
+      --max: 42rem;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background-color: var(--paper);
+      color: var(--ink);
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 1.125rem;
+      line-height: 1.7;
+    }
+
+    a {
+      color: var(--accent);
+    }
+
+    /*== masthead */
+    .site-header {
+      border-bottom: 2px solid var(--ink);
+    }
+
+    .site-header__inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 1rem 1.25rem;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .site-name {
+      margin: 0;
+      font-size: 1.5rem;
+      letter-spacing: 0.02em;
+      font-variant: small-caps;
+    }
+
+    .site-nav {
+      font-family: system-ui, sans-serif;
+      font-size: 0.8125rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .site-nav a {
+      color: var(--muted);
+      text-decoration: none;
+      margin-left: 1rem;
+    }
+
+    .site-nav a:hover {
+      color: var(--ink);
+    }
+
+    /*== article body */
+    .article {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 2.5rem 1.25rem 4rem;
+    }
+
+    .kicker {
+      font-family: system-ui, sans-serif;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      margin: 0 0 0.5rem;
+    }
+
+    .headline {
+      font-family: system-ui, sans-serif;
+      font-size: 2.25rem;
+      line-height: 1.15;
+      margin: 0 0 1rem;
+    }
+
+    .byline {
+      font-family: system-ui, sans-serif;
+      font-size: 0.875rem;
+      color: var(--muted);
+      margin: 0 0 2rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .byline a {
+      color: var(--ink);
+    }
+
+    .figure {
+      margin: 0 0 2rem;
+    }
+
+    .figure img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 0.25rem;
+    }
+
+    .figure figcaption {
+      font-family: system-ui, sans-serif;
+      font-size: 0.8125rem;
+      color: var(--muted);
+      margin-top: 0.5rem;
+    }
+
+    h2 {
+      font-family: system-ui, sans-serif;
+      font-size: 1.5rem;
+      margin: 2.5rem 0 0.75rem;
+    }
+
+    h3 {
+      font-family: system-ui, sans-serif;
+      font-size: 1.1875rem;
+      margin: 2rem 0 0.5rem;
+    }
+
+    .pull-quote {
+      margin: 2rem 0;
+      padding-left: 1.25rem;
+      border-left: 4px solid var(--accent);
+      font-size: 1.375rem;
+      line-height: 1.4;
+      font-style: italic;
+      color: #333;
+    }
+
+    /*== article action bar with deliberately tiny icon controls */
+    .actions {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      margin: 2rem 0;
+      padding: 0.75rem 0;
+      border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .actions__label {
+      font-family: system-ui, sans-serif;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      margin-right: 0.5rem;
+    }
+
+    /*== 16px icon buttons - below the 24px target-size minimum */
+    .icon-btn {
+      width: 16px;
+      height: 16px;
+      padding: 0;
+      border: none;
+      background: none;
+      color: var(--muted);
+      cursor: pointer;
+    }
+
+    .icon-btn svg {
+      width: 16px;
+      height: 16px;
+      display: block;
+    }
+
+    /*== tightly packed tag links - centres fall within 24px of each other */
+    .tags {
+      list-style: none;
+      display: flex;
+      gap: 1px;
+      padding: 0;
+      margin: 2rem 0;
+      font-family: system-ui, sans-serif;
+      font-size: 0.75rem;
+    }
+
+    .tags a {
+      display: block;
+      padding: 2px 6px;
+      background-color: #f0eaf4;
+      text-decoration: none;
+      border-radius: 0.125rem;
+    }
+
+    .comments {
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--rule);
+    }
+
+    .site-footer {
+      border-top: 2px solid var(--ink);
+      font-family: system-ui, sans-serif;
+      font-size: 0.8125rem;
+      color: var(--muted);
+    }
+
+    .site-footer__inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 1.5rem 1.25rem;
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .site-footer a {
+      color: var(--muted);
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="site-header">
+    <div class="site-header__inner">
+      <p class="site-name">The Daily Demo</p>
+      <nav class="site-nav" aria-label="Sections">
+        <a href="#">Culture</a>
+        <a href="#">Science</a>
+        <a href="#">Opinion</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="article">
+
+    <p class="kicker">Long read</p>
+    <h1 class="headline">The quiet revolution in how we read on screens</h1>
+
+    <!-- duplicate id #1: this id="author" is also used on the comments author below -->
+    <p class="byline" id="author">By <a href="#">Polly Tompkins</a> &middot; 22 May 2026</p>
+
+    <figure class="figure">
+      <img
+        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='400'%3E%3Crect width='800' height='400' fill='%23d9d2e3'/%3E%3Crect x='0' y='0' width='800' height='400' fill='url(%23g)'/%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23c9bcdb'/%3E%3Cstop offset='1' stop-color='%23efe9f4'/%3E%3C/linearGradient%3E%3C/defs%3E%3C/svg%3E"
+        alt="Abstract purple gradient standing in for the article's hero image">
+      <figcaption>A placeholder image. This one has proper alt text, so it is fine.</figcaption>
+    </figure>
+
+    <p>
+      For decades the page was a fixed thing. Ink met paper and stayed there. The screen changed that
+      contract quietly, and we are only now reckoning with what it means to read a sentence that can
+      reflow, resize, and rearrange itself beneath our gaze.
+    </p>
+
+    <h2>How spacing shapes attention</h2>
+
+    <p>
+      Typographers have always known that the space around words matters as much as the words
+      themselves. On screens, that space is negotiable - and the people who set it are not always the
+      people who read it. <a href="#">Recent studies</a> suggest the gap between comfortable and
+      exhausting can be a matter of millimetres.
+    </p>
+
+    <!-- empty heading #1: a section heading that was never filled in -->
+    <h2></h2>
+
+    <p>
+      When a heading is left blank, assistive technology announces a heading with no name, which is
+      disorienting for anyone navigating by structure. The paragraph that follows looks fine, but the
+      signpost above it points nowhere.
+    </p>
+
+    <p class="pull-quote">
+      Good reading design is mostly invisible. You only notice it when it fails.
+    </p>
+
+    <h3>The trouble with icons</h3>
+
+    <p>
+      Publishers love a compact toolbar. But a row of unlabelled icons is a row of locked doors for a
+      screen reader user. Below, the share controls have no accessible names at all - and they are far
+      too small to tap reliably.
+    </p>
+
+    <!-- target-size issues: 16px icon buttons (undersized) sitting tightly together (overlapping centres) -->
+    <!-- empty-link issues: the icon-only anchors below have no text, aria-label, or img alt -->
+    <div class="actions">
+      <span class="actions__label">Share</span>
+      <button type="button" class="icon-btn" aria-label="Print article">
+        <svg viewBox="0 0 16 16" aria-hidden="true">
+          <path fill="currentColor" d="M4 1h8v4H4zM2 6h12v6h-3v3H5v-3H2zm4 4v3h4v-3z" />
+        </svg>
+      </button>
+      <!-- icon-only link, no accessible name -->
+      <a href="#" class="icon-btn">
+        <svg viewBox="0 0 16 16" aria-hidden="true">
+          <path fill="currentColor" d="M8 14s-6-3.7-6-8a3.5 3.5 0 0 1 6-2.5A3.5 3.5 0 0 1 14 6c0 4.3-6 8-6 8z" />
+        </svg>
+      </a>
+      <a href="#" class="icon-btn">
+        <svg viewBox="0 0 16 16" aria-hidden="true">
+          <path fill="currentColor" d="M12 5a2 2 0 1 0-1.9-2.6L6 4.2a2 2 0 1 0 0 3.6l4.1 1.8A2 2 0 1 0 12 7a2 2 0 0 0-1.3.5L6.9 5.8a2 2 0 0 0 0-.6l3.8-1.7A2 2 0 0 0 12 5z" />
+        </svg>
+      </a>
+      <!-- link wrapping an image with empty alt - still no accessible name -->
+      <a href="#" class="icon-btn">
+        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Crect width='16' height='16' rx='3' fill='%23999'/%3E%3C/svg%3E" alt="">
+      </a>
+    </div>
+
+    <h3>Tags</h3>
+
+    <p>
+      Even the humble tag list can become a target-size hazard when the chips are packed edge to edge
+      with no breathing room between them.
+    </p>
+
+    <!-- target-size issue: tag links sit 1px apart, so their centres fall within the 24px threshold -->
+    <ul class="tags">
+      <li><a href="#">reading</a></li>
+      <li><a href="#">design</a></li>
+      <li><a href="#">screens</a></li>
+      <li><a href="#">type</a></li>
+    </ul>
+
+    <p>
+      Want more on this topic?
+      <!-- empty link: a "read more" anchor with no text at all -->
+      <a href="#"></a>
+      The link to the left should say where it goes, but it says nothing.
+    </p>
+
+    <!-- empty heading #2 -->
+    <h3></h3>
+
+    <!-- duplicate id #2: this section uses id="comments", repeated on the second block below -->
+    <section class="comments" id="comments">
+      <h2>Comments</h2>
+
+      <article>
+        <!-- duplicate id #1 (second use): id="author" was already used on the byline -->
+        <p id="author"><strong>Sally</strong> &middot; 2 hours ago</p>
+        <p>This finally put words to something I have felt for years. The spacing point especially.</p>
+        <p><a href="#">Reply</a></p>
+      </article>
+
+      <article>
+        <p><strong>Priya</strong> &middot; 1 hour ago</p>
+        <p>Tried the spacing override on my own blog and immediately found three broken layouts.</p>
+        <p><a href="#">Reply</a></p>
+      </article>
+    </section>
+
+    <!-- duplicate id #2 (second use): id="comments" repeated, so both this and the section above are flagged -->
+    <aside class="comments" id="comments">
+      <h3>Related discussion</h3>
+      <p>See the wider conversation in <a href="#">last week's forum thread</a>.</p>
+    </aside>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer__inner">
+      <nav aria-label="Footer">
+        <a href="#">About</a> &middot;
+        <a href="#">Contact</a> &middot;
+        <a href="#">Privacy</a>
+      </nav>
+    </div>
+  </footer>
+
+</body>
+
+</html>
