@@ -1,4 +1,4 @@
-//== bookmarklet definitions. each entry has a stable name, a display label,
+//== outliner tool definitions. each entry has a stable name, a display label,
 //== and a function that runs in the active tab's page context, not the popup.
 //== anything written inside fn must be self-contained: no closure variables
 //== from popup.js, no module imports, and no chrome.* apis. fn has access to
@@ -60,7 +60,7 @@ function installOutlinerHelpers() {
   window.__a11yOutliner = { logFindings, selectorPath }
 }
 
-const BOOKMARKLETS = [
+const OUTLINER_TOOLS = [
   {
     name: 'check-target-sizes',
     label: 'Check Target Sizes',
@@ -68,7 +68,7 @@ const BOOKMARKLETS = [
     fn: function (colours) {
       const OVERLAY_ATTR = 'data-target-size-overlay'
 
-      //== remove overlays from any bookmarklet so only one tool's results show at a time.
+      //== remove overlays from any tool so only the current tool's results show at a time.
       document
         .querySelectorAll(
           '[data-target-size-overlay], [data-empty-heading-overlay], [data-empty-anchor-overlay], [data-duplicate-id-overlay]'
@@ -178,7 +178,7 @@ const BOOKMARKLETS = [
     fn: function (colours) {
       const OVERLAY_ATTR = 'data-empty-heading-overlay'
 
-      //== remove overlays from any bookmarklet so only one tool's results show at a time.
+      //== remove overlays from any tool so only the current tool's results show at a time.
       document
         .querySelectorAll(
           '[data-target-size-overlay], [data-empty-heading-overlay], [data-empty-anchor-overlay], [data-duplicate-id-overlay]'
@@ -234,7 +234,7 @@ const BOOKMARKLETS = [
     fn: function (colours) {
       const OVERLAY_ATTR = 'data-empty-anchor-overlay'
 
-      //== remove overlays from any bookmarklet so only one tool's results show at a time.
+      //== remove overlays from any tool so only the current tool's results show at a time.
       document
         .querySelectorAll(
           '[data-target-size-overlay], [data-empty-heading-overlay], [data-empty-anchor-overlay], [data-duplicate-id-overlay]'
@@ -323,7 +323,7 @@ const BOOKMARKLETS = [
     fn: function (colours) {
       const OVERLAY_ATTR = 'data-duplicate-id-overlay'
 
-      //== remove overlays from any bookmarklet so only one tool's results show at a time.
+      //== remove overlays from any tool so only the current tool's results show at a time.
       document
         .querySelectorAll(
           '[data-target-size-overlay], [data-empty-heading-overlay], [data-empty-anchor-overlay], [data-duplicate-id-overlay]'

@@ -11,9 +11,9 @@ A simple Chrome extension (Manifest V3) that visually outlines accessibility iss
 
 The Accessibility Outliner icon will appear in the toolbar. Pin it for easy access.
 
-## Adding or editing bookmarklets
+## Adding or editing tools
 
-All bookmarklets live in `src/bookmarklets.js` as an array of objects. Each entry has:
+All tools live in `src/outliner-tools.js` as an array of objects. Each entry has:
 
 - `name` - a stable internal identifier, used for logging
 - `label` - the text shown on the button
@@ -21,7 +21,7 @@ All bookmarklets live in `src/bookmarklets.js` as an array of objects. Each entr
 
 The function runs in the target page's isolated world via `chrome.scripting.executeScript`. It has full access to the page's DOM, but it cannot reference variables from `popup.js`, import modules, or call any `chrome.*` API. Anything `fn` needs must be defined inside `fn` itself.
 
-To add a new bookmarklet, append another object to the array. To remove one, delete its entry.
+To add a new tool, append another object to the array. To remove one, delete its entry.
 
 ## Known limitations
 
@@ -35,5 +35,5 @@ Chrome blocks scripting on certain pages. When you click a tool on one of these,
 
 - `manifest.json` - extension metadata, permissions, and popup entry point
 - `src/popup.html`, `src/popup.css`, `src/popup.js` - the toolbar popup UI and click handlers
-- `src/bookmarklets.js` - the bookmarklet config array
+- `src/outliner-tools.js` - the outliner tool config array
 - `assets/` - logo and toolbar icons

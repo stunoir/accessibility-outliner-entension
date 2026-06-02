@@ -3,10 +3,10 @@ document.addEventListener('DOMContentLoaded', async () => {
   const statusEl = document.getElementById('extension-status')
   const buttonsByName = {}
 
-  for (const [shortcutIndex, bookmarklet] of BOOKMARKLETS.entries()) {
+  for (const [shortcutIndex, tool] of OUTLINER_TOOLS.entries()) {
     const button = document.createElement('button')
     button.type = 'button'
-    button.dataset.name = bookmarklet.name
+    button.dataset.name = tool.name
     button.setAttribute('aria-keyshortcuts', String(shortcutIndex + 1))
 
     const labelGroup = document.createElement('span')
@@ -14,11 +14,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const label = document.createElement('span')
     label.className = 'btn-label'
-    label.textContent = bookmarklet.label
+    label.textContent = tool.label
 
     const desc = document.createElement('span')
     desc.className = 'btn-desc'
-    desc.textContent = bookmarklet.description
+    desc.textContent = tool.description
 
     labelGroup.append(label, desc)
 
@@ -33,10 +33,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         other.classList.remove('is-active')
       })
       button.classList.add('is-active')
-      run(bookmarklet, count, statusEl)
+      run(tool, count, statusEl)
     })
     container.appendChild(button)
-    buttonsByName[bookmarklet.name] = button
+    buttonsByName[tool.name] = button
   }
 
   const clearButton = document.getElementById('clear-button')
@@ -86,7 +86,7 @@ async function clearAll(container, statusEl) {
     await chrome.storage.session.remove(`tab_${tab.id}`)
 
     //== wipe any overlays still on the page. silent on restricted pages where there
-    //== were no overlays to begin with (a bookmarklet couldn't have run there).
+    //== were no overlays to begin with (a tool couldn't have run there).
     await chrome.scripting.executeScript({
       target: { tabId: tab.id },
       func: function () {
@@ -104,7 +104,7 @@ async function clearAll(container, statusEl) {
   }
 }
 
-async function run(bookmarklet, countEl, statusEl) {
+async function run(tool, countEl, statusEl) {
   //== clear previous count and status before the run, so a failed run does not show stale data.
   countEl.textContent = ''
   countEl.hidden = true
@@ -127,7 +127,7 @@ async function run(bookmarklet, countEl, statusEl) {
 
     //== install the shared console reporter (window.__a11yOutliner) before the check
     //== fn runs. it lives in the page's isolated world, which persists across these
-    //== executeScript calls, so every bookmarklet can share the one logFindings.
+    //== executeScript calls, so every tool can share the one logFindings.
     await chrome.scripting.executeScript({
       target: { tabId: tab.id },
       func: installOutlinerHelpers
@@ -135,7 +135,7 @@ async function run(bookmarklet, countEl, statusEl) {
 
     const results = await chrome.scripting.executeScript({
       target: { tabId: tab.id },
-      func: bookmarklet.fn,
+      func: tool.fn,
       args: [colours]
     })
 
@@ -144,7 +144,7 @@ async function run(bookmarklet, countEl, statusEl) {
       countEl.textContent = num
       countEl.classList.toggle('is-zero', num === 0)
       countEl.hidden = false
-      await saveState(tab, bookmarklet.name, num)
+      await saveState(tab, tool.name, num)
     }
   } catch {
     //== chrome blocks scripting on chrome://, the web store, and other extension pages.
