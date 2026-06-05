@@ -3,14 +3,14 @@
   --surface: oklch(100% 0 0);
   --text: oklch(37.6% 0.019 268);
   --text-strong: oklch(14% 0.012 250);
-  --text-muted: oklch(55.6% 0.019 271);
+  --text-muted: oklch(52.97% 0.0206 275.35);
   --btn-surface: oklch(100% 0 0);
-  --btn-border: oklch(79.6% 0.096 293.5);
-  --btn-hover-surface: oklch(95.4% 0.024 296);
-  --btn-hover-border: oklch(79.6% 0.096 293.5);
-  --btn-active-surface: oklch(95.4% 0.024 296);
-  --btn-active-border: oklch(79.6% 0.096 293.5);
-  --accent: oklch(57.2% 0.2321 317.18);
+  --btn-border: oklch(84.27% 0.0719 259.54);
+  --btn-hover-surface: oklch(95.94% 0.0178 261.34);
+  --btn-hover-border: oklch(69.23% 0.1502 259.73);
+  --btn-active-surface: oklch(95.94% 0.0178 261.34);
+  --btn-active-border: oklch(69.23% 0.1502 259.73);
+  --accent: oklch(69.23% 0.1502 259.73);
   --shadow: oklch(22% 0.01 250 / 0.08);
   --font-sans:
     ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI Variable', 'Segoe UI', Roboto, sans-serif;
@@ -57,11 +57,9 @@
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(-0.125rem);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
   }
 }
 
@@ -122,6 +120,16 @@ body {
   font-size: 0.875rem;
   line-height: 1.5;
   color: var(--text-muted);
+}
+
+.base-info {
+  display: none;
+  margin: 1rem 0 0;
+  font-size: 0.875rem;
+  line-height: 1.3;
+  color: var(--text-muted);
+  text-wrap: balance;
+  text-align: center;
 }
 
 .buttons-container {
@@ -243,6 +251,10 @@ button.clear-button {
 
 .extension-panel:has(button.is-active) button.clear-button {
   display: flex;
+}
+
+.extension-panel:has(button.is-active) .base-info {
+  display: block;
 }
 
 .extension-status {
